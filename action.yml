@@ -1,0 +1,18 @@
+﻿name: 'Process .NET test results'
+description: 'Process .NET test results'
+inputs:
+  fileName:  # file name of the trx/xml file to process
+    description: 'Filename and path of the trx/xml file to process'
+    required: true
+    default: ''
+runs:
+  using: "composite"
+  steps:
+    - name: Output results
+      shell: pwsh
+      run: |
+        [xml]$result = Get-Content -Path ${{ inputs.fileName }}
+        echo "Test results with action! :rocket: " >> $env:GITHUB_STEP_SUMMARY
+        echo "- Total: $($result.TestRun.ResultSummary.Counters.total)" >> $env:GITHUB_STEP_SUMMARY
+        echo "- Passed ✅: $($result.TestRun.ResultSummary.Counters.passed)" >> $env:GITHUB_STEP_SUMMARY
+        echo "- Failed ❌: $($result.TestRun.ResultSummary.Counters.failed)" >> $env:GITHUB_STEP_SUMMARY
