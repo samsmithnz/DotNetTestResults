@@ -10,7 +10,7 @@ jobs:
   build:
     name: Build job
     runs-on: windows-latest
-    env:
+    outputs:
       Version: ${{ steps.gitversion.outputs.SemVer }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
     steps:
@@ -29,11 +29,11 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
     - name: Create Release
-      if: env.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' #Only create a release if there has been a commit/version change and running on the main branch   
+      if: outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' #Only create a release if there has been a commit/version change and running on the main branch   
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ env.Version }}
-        release_name: Release ${{ env.Version }}  
+        tag_name: ${{ outputs.Version }}
+        release_name: Release ${{ outputs.Version }}  
