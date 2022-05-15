@@ -29,7 +29,7 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
     - name: Create Release
-      if: env.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' #Only create a release if there has been a commit/version change and running on the main branch   
+      if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' #Only create a release if there has been a commit/version change and running on the main branch   
       id: create_release
       uses: actions/create-release@v1
       env:
