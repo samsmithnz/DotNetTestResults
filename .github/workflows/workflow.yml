@@ -10,9 +10,9 @@ jobs:
   build:
     name: Build job
     runs-on: ubuntu-latest
-    env:
-      Version: ${{ steps.gitversion.outputs.SemVer }}
-      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
+    #env:
+    #  Version: ${{ steps.gitversion.outputs.SemVer }}
+    #  CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -35,5 +35,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ env.Version }}
-        release_name: Release ${{ env.Version }}  
+        tag_name: ${{ steps.gitversion.outputs.SemVer }}
+        release_name: Release ${{ steps.gitversion.outputs.SemVer }}  
