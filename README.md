@@ -14,7 +14,7 @@ For example:
 2. Pass in the trx file path from the test step to this action:
 
 ```
-    - uses: samsmithnz/DotNetTestResults@main
+    - uses: samsmithnz/DotNetTestResults@0.1.0
       with:
         fileName: ${{ github.workspace }}/TestOutput.xml
 ```
