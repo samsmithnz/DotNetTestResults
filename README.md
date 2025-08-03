@@ -1,6 +1,8 @@
 # DotNetTestResults
 [![CI/CD](https://github.com/samsmithnz/DotNetTestResults/actions/workflows/workflow.yml/badge.svg)](https://github.com/samsmithnz/DotNetTestResults/actions/workflows/workflow.yml)
 
+Displays .NET test results to the actions summary.
+
 To use, we need two steps in our GitHub Actions workflow:
 1. Update the `dotnet test` step to output a trx formatted file, adding `-l:"trx;LogFileName=${{ github.workspace }}/TestOutput.xml"`
 
