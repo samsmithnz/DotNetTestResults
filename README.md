@@ -18,3 +18,7 @@ For example:
       with:
         fileName: ${{ github.workspace }}/TestOutput.xml
 ```
+
+The result displays in the summary like this: 
+
+<img width="3239" height="1725" alt="image" src="https://github.com/user-attachments/assets/40562aad-6032-47d7-afa5-0b4ec1fce2c3" />
