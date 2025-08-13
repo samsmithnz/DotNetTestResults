@@ -39,31 +39,31 @@ jobs:
         release_name: Release ${{ steps.gitversion.outputs.MajorMinorPatch }}  
     - name: Update major version tag
       uses: richardsimko/update-tag@v1
-      if: needs.build.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main'
+      if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main'
       with:
-        tag_name: "v${{ needs.build.outputs.Major }}"
+        tag_name: "v${{ steps.gitversion.outputs.Major }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Major version Release (update) #Create or Update the major version release. e.g. 'v2'
       uses: ncipollo/release-action@v1
-      if: needs.build.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' 
+      if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' 
       with:
-        tag: "v${{ needs.build.outputs.Major }}"
-        name: "v${{ needs.build.outputs.Major }}"
+        tag: "v${{ steps.gitversion.outputs.Major }}"
+        name: "v${{ steps.gitversion.outputs.Major }}"
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }} 
     - name: Update minor version tag
       uses: richardsimko/update-tag@v1
-      if: needs.build.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' 
+      if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' 
       with:
-        tag_name: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
+        tag_name: "v${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Minor version Release (update) #Create or Update the minor version release. e.g. 'v2.1'
       uses: ncipollo/release-action@v1
-      if: needs.build.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' 
+      if: steps.gitversion.outputs.CommitsSinceVersionSource > 0 && github.ref == 'refs/heads/main' 
       with:
-        tag: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
-        name: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
+        tag: "v${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}"
+        name: "v${{ steps.gitversion.outputs.Major }}.${{ steps.gitversion.outputs.Minor }}"
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
